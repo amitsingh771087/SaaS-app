@@ -1,0 +1,32 @@
+# ---- Global ----
+*.log
+*.env
+__pycache__/
+*.pyc
+.DS_Store
+
+# ---- Backend (Django) ----
+/backend/venv/
+/backend/db.sqlite3
+/backend/media/
+/backend/staticfiles/
+
+# Django stuff
+*.pot
+*.py[co]
+*.sqlite3
+*.mo
+*.swp
+
+# ---- Frontend (React) ----
+/frontend/node_modules/
+/frontend/build/
+/frontend/.pnp/
+/frontend/.pnp.js
+frontend/package-lock.json
+frontend/yarn.lock
+
+# ---- IDE / Editors ----
+.vscode/
+.idea/
+*.iml
