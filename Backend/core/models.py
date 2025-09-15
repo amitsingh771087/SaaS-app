@@ -8,6 +8,18 @@
 from django.db import models
 
 
+
+class Tenant(models.Model):
+    tenant_id = models.CharField(primary_key=True, max_length=36)
+    tenant_name = models.CharField(max_length=255)
+    # add other fields
+    class Meta:
+        db_table = 'tenants'
+        
+
+
+
+
 class ApiKeys(models.Model):
     id = models.CharField(primary_key=True, max_length=36)
     tenant = models.ForeignKey('Tenants', models.DO_NOTHING)
@@ -86,7 +98,7 @@ class CustomerTimeline(models.Model):
 
 class Customers(models.Model):
     id = models.CharField(primary_key=True, max_length=36)
-    tenant = models.ForeignKey('Tenants', models.DO_NOTHING)
+    tenant = models.ForeignKey('Tenants', on_delete=models.CASCADE)
     display_name = models.CharField(max_length=120)
     first_name = models.CharField(max_length=80, blank=True, null=True)
     last_name = models.CharField(max_length=80, blank=True, null=True)
@@ -607,11 +619,11 @@ class StockTxns(models.Model):
         db_table = 'stock_txns'
 
 
-class TenantUsers(models.Model):
+class TenantUser(models.Model):  # Rename from TenantUsers
     id = models.CharField(primary_key=True, max_length=36)
-    tenant = models.ForeignKey('Tenants', models.DO_NOTHING)
-    user = models.ForeignKey('Users', models.DO_NOTHING)
-    role = models.CharField(max_length=10)
+    tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
+    user = models.ForeignKey('Users', on_delete=models.CASCADE)
+    role = models.CharField(max_length=50)
     is_active = models.IntegerField()
     invited_by = models.CharField(max_length=36, blank=True, null=True)
     invite_token = models.CharField(max_length=64, blank=True, null=True)
@@ -622,6 +634,7 @@ class TenantUsers(models.Model):
         managed = False
         db_table = 'tenant_users'
         unique_together = (('tenant', 'user'),)
+
 
 
 class Tenants(models.Model):
