@@ -132,10 +132,18 @@ class CustomerContacts(TenantScopedModel):
         db_table = 'customer_contacts'
 
 class CustomerTimeline(TenantScopedModel):
+    
+    EVENT_TYPES = [
+        ("note", "Note"),
+        ("call", "Call"),
+        ("meeting", "Meeting"),
+        ("email", "Email"),
+        ("status_update", "Status Update"),
+    ]
     id = models.CharField(primary_key=True, max_length=36, default=generate_uuid)
     tenant = models.ForeignKey(Tenants, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customers, on_delete=models.CASCADE)
-    event_type = models.CharField(max_length=40)
+    event_type = models.CharField(max_length=40 ,choices=EVENT_TYPES )
     data = models.JSONField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.CharField(max_length=36, blank=True, null=True)

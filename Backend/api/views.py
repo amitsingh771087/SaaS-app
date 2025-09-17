@@ -5,8 +5,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import get_object_or_404
-
-
+from .permissions import IsOwnerOrAdmin
 from .models import Item
 from .serializers import (
     ItemSerializer, UserSerializer, TenantSerializer, 
@@ -14,6 +13,8 @@ from .serializers import (
     CustomerSerializer, CustomerTimelineSerializer
 )
 from core.models import( Tenants, TenantUsers,ItemCategories, Items, ItemPrices , Customers, CustomerTimeline)
+from rest_framework.permissions import IsAuthenticated
+
 
 
 # ---------------------- CRUD ViewSets ----------------------
@@ -72,6 +73,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=["get", "post"], url_path="timeline")
     def timeline(self, request, pk=None):
         customer = self.get_object()
+        permission_classes = [IsOwnerOrAdmin]
 
         if request.method == "GET":
             timeline = CustomerTimeline.objects.filter(customer=customer)
@@ -116,6 +118,14 @@ class CustomerTimelineView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class CustomerTimelineViewSet(viewsets.ModelViewSet):
+    queryset = CustomerTimeline.objects.all()
+    serializer_class = CustomerTimelineSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save()
 
 
 # --- Import Customers via CSV ---

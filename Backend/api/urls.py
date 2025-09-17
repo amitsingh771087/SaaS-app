@@ -2,12 +2,12 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
-    TokenRefreshView,
-)
+    TokenRefreshView)
 from .views import( ItemViewSet, UserViewSet, TenantViewSet, TenantUserViewSet, CustomerViewSet,ItemCategoryViewSet,ItemPriceViewSet,CustomerListCreateView,
     CustomerDetailView,
     CustomerTimelineView,
-    CustomerImportCSVView,  signup)
+    CustomerImportCSVView,CustomerTimelineViewSet,  signup)
+
 
 # Router for ViewSets
 router = DefaultRouter()
@@ -19,6 +19,8 @@ router.register(r'customers', CustomerViewSet)
 router.register(r'item-categories', ItemCategoryViewSet)
 router.register(r'items', ItemViewSet)
 router.register(r'item-prices', ItemPriceViewSet)
+router.register(r"customer-timelines", CustomerTimelineViewSet, basename="customer-timelines")
+
 
 
 

@@ -59,7 +59,22 @@ class CustomerTimelineSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerTimeline
         fields = "__all__"
-        read_only_fields = ['tenant', 'customer', 'created_by']
+        read_only_fields = ("id", "tenant", "created_at", "created_by")
+
+    def create(self, validated_data):
+        # Get customer instance
+        customer = validated_data.get("customer")
+
+        # Auto-assign tenant from customer
+        validated_data["tenant"] = customer.tenant
+
+        # Attach created_by from request context
+        request = self.context.get("request")
+        if request and request.user.is_authenticated:
+            validated_data["created_by"] = str(request.user.id)
+
+        return super().create(validated_data)
+
         
         
         
