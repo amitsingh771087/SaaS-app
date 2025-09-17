@@ -9,7 +9,7 @@ from .serializers import (
     ItemSerializer, UserSerializer, TenantSerializer, 
     TenantUserSerializer, CustomerSerializer
 )
-from core.models import Tenant, TenantUser, Customers
+from core.models import Tenants, TenantUsers, Customers
 
 
 # ---------------------- CRUD ViewSets ----------------------
@@ -26,13 +26,13 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class TenantViewSet(viewsets.ModelViewSet):
-    queryset = Tenant.objects.all()
+    queryset = Tenants.objects.all()
     serializer_class = TenantSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
 class TenantUserViewSet(viewsets.ModelViewSet):
-    queryset = TenantUser.objects.all()
+    queryset = TenantUsers.objects.all()
     serializer_class = TenantUserSerializer
     permission_classes = [permissions.IsAuthenticated]
 

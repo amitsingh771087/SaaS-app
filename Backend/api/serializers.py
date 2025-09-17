@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from .models import Item
 from django.contrib.auth.models import User
-from core.models import Tenant, TenantUser, Customers
+# from core.models import Tenant, TenantUser, Customers
+from core.models import Tenants, TenantUsers, Customers
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,13 +17,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 class TenantSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Tenant
+        model = Tenants
         fields = '__all__'
 
 
 class TenantUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TenantUser
+        model = TenantUsers
         fields = '__all__'
 
 
