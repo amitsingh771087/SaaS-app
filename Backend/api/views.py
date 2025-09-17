@@ -7,16 +7,16 @@ from django.contrib.auth.hashers import make_password
 from .models import Item
 from .serializers import (
     ItemSerializer, UserSerializer, TenantSerializer, 
-    TenantUserSerializer, CustomerSerializer
+    TenantUserSerializer, CustomerSerializer,ItemCategorySerializer, ItemSerializer, ItemPriceSerializer
 )
-from core.models import Tenants, TenantUsers, Customers
+from core.models import( Tenants, TenantUsers, Customers,ItemCategories, Items, ItemPrices)
 
 
 # ---------------------- CRUD ViewSets ----------------------
-class ItemViewSet(viewsets.ModelViewSet):
-    queryset = Item.objects.all()
-    serializer_class = ItemSerializer
-    permission_classes = [permissions.IsAuthenticated]
+# class ItemViewSet(viewsets.ModelViewSet):
+#     queryset = Item.objects.all()
+#     serializer_class = ItemSerializer
+#     permission_classes = [permissions.IsAuthenticated]
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -41,11 +41,30 @@ class CustomerViewSet(viewsets.ModelViewSet):
     queryset = Customers.objects.all()
     serializer_class = CustomerSerializer
     permission_classes = [permissions.IsAuthenticated]
+    
+# Items
+
+class ItemCategoryViewSet(viewsets.ModelViewSet):
+    queryset = ItemCategories.objects.all()
+    serializer_class = ItemCategorySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class ItemViewSet(viewsets.ModelViewSet):
+    queryset = Items.objects.all()
+    serializer_class = ItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class ItemPriceViewSet(viewsets.ModelViewSet):
+    queryset = ItemPrices.objects.all()
+    serializer_class = ItemPriceSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 # ---------------------- Auth Endpoints ----------------------
 @api_view(["POST"])
-@permission_classes([permissions.AllowAny])  # allow anyone to signup
+@permission_classes([permissions.AllowAny])  
 def signup(request):
     username = request.data.get("username")
     password = request.data.get("password")
@@ -59,7 +78,7 @@ def signup(request):
 
     user = User.objects.create(
         username=username,
-        password=make_password(password),  # hashes password
+        password=make_password(password),  
         email=email
     )
 

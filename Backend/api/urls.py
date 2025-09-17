@@ -4,15 +4,19 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from .views import ItemViewSet, UserViewSet, TenantViewSet, TenantUserViewSet, CustomerViewSet , signup
+from .views import( ItemViewSet, UserViewSet, TenantViewSet, TenantUserViewSet, CustomerViewSet,ItemCategoryViewSet,ItemPriceViewSet , signup)
 
 # Router for ViewSets
 router = DefaultRouter()
-router.register(r'items', ItemViewSet)
+# router.register(r'items', ItemViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'tenants', TenantViewSet)
 router.register(r'tenant-users', TenantUserViewSet)
 router.register(r'customers', CustomerViewSet)
+router.register(r'item-categories', ItemCategoryViewSet)
+router.register(r'items', ItemViewSet)
+router.register(r'item-prices', ItemPriceViewSet)
+
 
 
 
