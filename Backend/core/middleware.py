@@ -6,12 +6,12 @@ class TenantMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        tenant_id = request.headers.get("X-Tenant-ID")  # or subdomain logic
+        tenant_id = request.headers.get("X-Tenant-ID") 
         if tenant_id:
             try:
                 request.tenant = Tenants.objects.get(id=tenant_id)
             except Tenants.DoesNotExist:
-                return HttpResponseForbidden("Invalid tenant")
+                request.tenant = None
         else:
             request.tenant = None
         return self.get_response(request)

@@ -116,29 +116,7 @@ class NumberingSequences(TenantScopedModel):
         db_table = 'numbering_sequences'
         unique_together = (('tenant', 'seq_key'),)
 
-# Customers Models
-# class Customers(TenantScopedModel):
-#     id = models.CharField(primary_key=True, max_length=36, default=generate_uuid)
-#     tenant = models.ForeignKey(Tenants, on_delete=models.CASCADE)
-#     display_name = models.CharField(max_length=120)
-#     first_name = models.CharField(max_length=80, blank=True, null=True)
-#     last_name = models.CharField(max_length=80, blank=True, null=True)
-#     primary_phone = models.CharField(max_length=20, blank=True, null=True)
-#     primary_email = models.CharField(max_length=160, blank=True, null=True)
-#     whatsapp_opt_in = models.BooleanField(default=True)
-#     tags = models.JSONField(blank=True, null=True)
-#     gstin = models.CharField(max_length=15, blank=True, null=True)
-#     billing_address = models.JSONField(blank=True, null=True)
-#     shipping_address = models.JSONField(blank=True, null=True)
-#     notes = models.TextField(blank=True, null=True)
-#     source = models.CharField(max_length=40, blank=True, null=True)
-#     status = models.CharField(max_length=11, choices=[('active', 'Active'), ('inactive', 'Inactive'), ('blacklisted', 'Blacklisted')], default='active')
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
 
-#     class Meta:
-#         db_table = 'customers'
-        
 class CustomerContacts(TenantScopedModel):
     id = models.CharField(primary_key=True, max_length=36, default=generate_uuid)
     tenant = models.ForeignKey(Tenants, on_delete=models.CASCADE)
