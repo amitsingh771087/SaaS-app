@@ -1,11 +1,12 @@
 import { NavLink } from "react-router-dom";
-import { FaTachometerAlt, FaUsers, FaBox } from "react-icons/fa";
+import { FaTachometerAlt, FaUsers, FaBox, FaUserFriends } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
   { path: "/", label: "Dashboard", icon: <FaTachometerAlt /> },
   { path: "/customers", label: "Customers", icon: <FaUsers /> },
   { path: "/items", label: "Items", icon: <FaBox /> },
+  { path: "/tenants", label: "Tenants", icon: <FaUserFriends /> },
 ];
 
 export default function Sidebar({ isOpen, toggleSidebar }) {

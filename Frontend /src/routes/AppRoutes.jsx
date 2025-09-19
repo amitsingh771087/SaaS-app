@@ -15,6 +15,10 @@ import Dashboard from "../pages/dashboard/Dashboard";
 
 import ItemsList from "../pages/items/ItemsList";
 
+import TenantsList from "../pages/tenants/TenantsList";
+import TenantView from "../pages/tenants/TenantView";
+import TenantForm from "../pages/tenants/TenantForm";
+
 export default function AppRoutes() {
   const { isAuth } = useAuth();
 
@@ -39,6 +43,12 @@ export default function AppRoutes() {
           <Route path="/customers/create" element={<CustomerForm />} />
           <Route path="/customers/:id/edit" element={<CustomerForm />} />
           <Route path="/customers/:id" element={<CustomerView />} />
+          {/* Tenants */}
+          <Route path="/tenants" element={<TenantsList />} />
+          <Route path="/tenants/create" element={<TenantForm />} />
+          <Route path="/tenants/:id" element={<TenantView />} />
+          <Route path="/tenants/:id/edit" element={<TenantForm />} />
+
           <Route
             path="/customers/:id/timeline"
             element={<CustomerTimeline />}
