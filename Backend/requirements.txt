@@ -1,0 +1,26 @@
+altgraph @ file:///AppleInternal/Library/BuildRoots/39d9dc1a-2111-11f0-be06-226177e5bb69/Library/Caches/com.apple.xbs/Sources/python3/altgraph-0.17.2-py2.py3-none-any.whl
+asgiref==3.9.1
+cffi==2.0.0
+cryptography==45.0.7
+Django==4.2.24
+django-cors-headers==4.8.0
+djangorestframework==3.16.1
+djangorestframework_simplejwt==5.5.1
+drf-yasg==1.21.10
+future @ file:///AppleInternal/Library/BuildRoots/39d9dc1a-2111-11f0-be06-226177e5bb69/Library/Caches/com.apple.xbs/Sources/python3/future-0.18.2-py3-none-any.whl
+gunicorn==23.0.0
+inflection==0.5.1
+macholib @ file:///AppleInternal/Library/BuildRoots/39d9dc1a-2111-11f0-be06-226177e5bb69/Library/Caches/com.apple.xbs/Sources/python3/macholib-1.15.2-py2.py3-none-any.whl
+mysqlclient==2.1.1
+packaging==25.0
+pycparser==2.23
+PyJWT==2.10.1
+PyMySQL==1.1.2
+python-decouple==3.8
+pytz==2025.2
+PyYAML==6.0.2
+six @ file:///AppleInternal/Library/BuildRoots/39d9dc1a-2111-11f0-be06-226177e5bb69/Library/Caches/com.apple.xbs/Sources/python3/six-1.15.0-py2.py3-none-any.whl
+sqlparse==0.5.3
+typing_extensions==4.15.0
+uritemplate==4.2.0
+whitenoise==6.11.0
