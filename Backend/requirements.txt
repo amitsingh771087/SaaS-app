@@ -2,7 +2,9 @@ asgiref==3.9.1
 Django==4.2.24
 djangorestframework==3.16.1
 djangorestframework_simplejwt==5.5.1
+gunicorn==23.0.0
 mysqlclient==2.1.1
+packaging==25.0
 PyJWT==2.10.1
 PyMySQL==1.1.2
 python-decouple==3.8
