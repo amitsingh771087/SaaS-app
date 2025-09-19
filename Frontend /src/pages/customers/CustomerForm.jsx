@@ -1,6 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import {
+  createCustomer,
+  getCustomerById,
+  updateCustomer,
+} from "../../api/Customer.js";
 
 export default function CustomerForm() {
   const { id } = useParams();
@@ -13,15 +18,24 @@ export default function CustomerForm() {
     primary_phone: "",
     status: "Active",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
+  // Load existing customer if editing
   useEffect(() => {
     if (isEdit) {
-      setForm({
-        display_name: "Loaded Name",
-        primary_email: "loaded@example.com",
-        primary_phone: "9998887777",
-        status: "Active",
-      });
+      setLoading(true);
+      getCustomerById(id)
+        .then((res) => {
+          setForm({
+            display_name: res.data.display_name || "",
+            primary_email: res.data.primary_email || "",
+            primary_phone: res.data.primary_phone || "",
+            status: res.data.status === "active" ? "Active" : "Inactive",
+          });
+        })
+        .catch((err) => setError("Failed to load customer data."))
+        .finally(() => setLoading(false));
     }
   }, [id, isEdit]);
 
@@ -29,9 +43,37 @@ export default function CustomerForm() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate("/customers");
+    setLoading(true);
+    setError("");
+
+    try {
+      if (isEdit) {
+        // Update existing customer
+        await updateCustomer(id, {
+          display_name: form.display_name,
+          primary_email: form.primary_email,
+          primary_phone: form.primary_phone,
+          status: form.status.toLowerCase(),
+        });
+      } else {
+        // Create new customer
+        await createCustomer({
+          tenant: "b5788f85-76a7-4ce0-92fe-d10b9a344930", // Replace with actual tenant ID dynamically if needed
+          display_name: form.display_name,
+          primary_email: form.primary_email,
+          primary_phone: form.primary_phone,
+        });
+      }
+
+      navigate("/customers");
+    } catch (err) {
+      console.error(err);
+      setError("Failed to save customer. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -43,6 +85,10 @@ export default function CustomerForm() {
       <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-700 mb-6 sm:mb-8">
         {isEdit ? "Edit Customer" : "Create New Customer"}
       </h1>
+
+      {error && (
+        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">{error}</div>
+      )}
 
       <form
         onSubmit={handleSubmit}
@@ -103,15 +149,23 @@ export default function CustomerForm() {
           </select>
         </div>
 
-        {/* Buttons - stacked on mobile, inline on desktop */}
         <div className="col-span-2 flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6">
           <motion.button
             type="submit"
-            className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg shadow hover:shadow-xl"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            disabled={loading}
+            className={`w-full sm:w-auto px-6 py-3 text-white font-semibold rounded-lg shadow hover:shadow-xl ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-gradient-to-r from-blue-500 to-indigo-600"
+            }`}
+            whileHover={{ scale: loading ? 1 : 1.05 }}
+            whileTap={{ scale: loading ? 1 : 0.95 }}
           >
-            {isEdit ? "Update Customer" : "Create Customer"}
+            {loading
+              ? "Saving..."
+              : isEdit
+              ? "Update Customer"
+              : "Create Customer"}
           </motion.button>
           <button
             type="button"
