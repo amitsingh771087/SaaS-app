@@ -19,7 +19,22 @@ import CustomerView from "../pages/customers/CustomerView";
 // Dashboard + Modules
 import Dashboard from "../pages/dashboard/Dashboard";
 
+// items
 import ItemsList from "../pages/items/ItemsList";
+import CreateItem from "../pages/items/CreateItem";
+import EditItem from "../pages/items/EditItem";
+import ItemsView from "../pages/items/ItemsView";
+
+//  item categories
+import ItemCategoriesList from "../pages/ItemCategory/ItemCategoriesView";
+import CreateItemCategory from "../pages/ItemCategory/CreateItemCategory";
+import EditItemCategory from "../pages/ItemCategory/EditItemCategory";
+
+// item prices
+import ItemPricesList from "../pages/ItemCategory/ItemPricesView";
+import CreateItemPrice from "../pages/ItemCategory/CreateItemPrice";
+import EditItemPrice from "../pages/ItemCategory/EditItemPrice";
+
 // tensnts
 import TenantsList from "../pages/tenants/TenantsList";
 import TenantView from "../pages/tenants/TenantView";
@@ -66,7 +81,28 @@ export default function AppRoutes() {
             path="/customers/:id/timeline"
             element={<CustomerTimeline />}
           />
-          <Route path="items" element={<ItemsList />} />
+          {/* items */}
+          <Route path="/items" element={<ItemsList />} />
+          <Route path="/items/create" element={<CreateItem />} />
+          <Route path="/items/:id/edit" element={<EditItem />} />
+          <Route path="/items/:id" element={<ItemsView />} />
+
+          {/* item categories */}
+          <Route path="/item-categories" element={<ItemCategoriesList />} />
+          <Route
+            path="/item-categories/create"
+            element={<CreateItemCategory />}
+          />
+          <Route
+            path="/item-categories/:id/edit"
+            element={<EditItemCategory />}
+          />
+
+          {/* item prices */}
+          <Route path="/item-prices" element={<ItemPricesList />} />
+          <Route path="/item-prices/create" element={<CreateItemPrice />} />
+          <Route path="/item-prices/:id/edit" element={<EditItemPrice />} />
+
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
       ) : (
