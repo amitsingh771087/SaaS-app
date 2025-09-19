@@ -1,9 +1,16 @@
 import { NavLink } from "react-router-dom";
-import { FaTachometerAlt, FaUsers, FaBox, FaUserFriends } from "react-icons/fa";
+import {
+  FaTachometerAlt,
+  FaUsers,
+  FaUser,
+  FaBox,
+  FaUserFriends,
+} from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
   { path: "/", label: "Dashboard", icon: <FaTachometerAlt /> },
+  { path: "/users", label: "Users", icon: <FaUser /> },
   { path: "/customers", label: "Customers", icon: <FaUsers /> },
   { path: "/items", label: "Items", icon: <FaBox /> },
   { path: "/tenants", label: "Tenants", icon: <FaUserFriends /> },
